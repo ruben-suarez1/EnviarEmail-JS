@@ -1,6 +1,6 @@
 //variables
 const btnEnviar = document.querySelector('#enviar');
-const btnResetear = document.querySelector('#resetBtn');
+const btnReset = document.querySelector('#resetBtn');
 const formulario = document.querySelector('#enviar-mail');
 
 //variables para campos
@@ -21,7 +21,7 @@ function evenListenrs() {
     mensaje.addEventListener('blur', validarFormulario);
 
     //reinicia el formulario
-    btnResetear.addEventListener('click', resetearFormulario);
+    btnReset.addEventListener('click', resetearFormulario);
 
     //Enviar Email
     formulario.addEventListener('submit', enviarEmail)
@@ -55,17 +55,15 @@ function validarFormulario(e) {
 
     if(e.target.type === 'email') {
 
-         //Elimina los errores
-         const error = document.querySelector('p.error');
-         if(error) {
+        if( er.test( e.target.value ) ) {
+            //Elimina los errores
+            const error = document.querySelector('p.error');
+            if(error) {
              error.remove();
-         }
+            }
 
         e.target.classList.remove('border', 'border-red-500');
         e.target.classList.add('border', 'border-green-500');
-
-        if( er.test( e.target.value ) ) {
-            mostrarError('El email es válido');
         } else {
             e.target.classList.remove('border', 'border-green-500');
             e.target.classList.add('border', 'border-red-500');
@@ -96,13 +94,14 @@ function enviarEmail(e) {
     e.preventDefault();
 
     //mostrar el spinner
-    const spinner = document.querySelectorAll('#spinner');
+    const spinner = document.querySelector('#spinner');
     spinner.style.display = 'flex';
 
 
     //depues de 3 segundos oculata spinner y muestra mensaje
     setTimeout(() => {
         spinner.style.display = 'none';
+
         //mensaje de envio
         const parrafo = document.createElement('p');
         parrafo.textContent = 'El mensaje se envió correctamente';
@@ -114,8 +113,9 @@ function enviarEmail(e) {
 
         setTimeout(() => {
             parrafo.remove(); //elimina el parrafo
+
             resetearFormulario();
-        }, 000);
+        }, 3000);
     }, 2000);
 }
 
